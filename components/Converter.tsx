@@ -18,9 +18,16 @@ export default function Converter() {
   const [currency, setCurrency] = useState("eur");
   const [convertTo, setConvertTo] = useState("eur");
   const [result, setResult] = useState(0);
-  getData(amount, currency, convertTo).then((data) => {
-    setResult(data.result);
-  });
+
+  useEffect(() => {
+    getData(amount, currency, convertTo)
+      .then((data) => {
+        setResult(data.result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [amount, currency, convertTo]);
 
   const data = [
     { value: "eur", label: "🇪🇺 EUR" },
@@ -28,6 +35,11 @@ export default function Converter() {
     { value: "cad", label: "🇨🇦 CAD" },
     { value: "gbp", label: "🇬🇧 GBP" },
     { value: "aud", label: "🇦🇺 AUD" },
+    { value: "jpy", label: "🇯🇵 JPY" },
+    { value: "cny", label: "🇨🇳 CNY" },
+    { value: "rub", label: "🇷🇺 RUB" },
+    { value: "inr", label: "🇮🇳 INR" },
+    { value: "brl", label: "🇧🇷 BRL" },
   ];
 
   const select = (
@@ -45,7 +57,7 @@ export default function Converter() {
   );
 
   return (
-    <div>
+    <div className="converter">
       <TextInput
         onChange={(e) => {
           setAmount(Number(e.currentTarget.value));
@@ -56,13 +68,16 @@ export default function Converter() {
         rightSection={select}
         rightSectionWidth={92}
       />
+
+      <span>to</span>
       <NativeSelect
         data={data}
         onChange={(e) => {
           setConvertTo(e.currentTarget.value);
         }}
       />
-      {result}
+      <span>=</span>
+      <span>{result}</span>
     </div>
   );
 }

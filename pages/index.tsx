@@ -1,9 +1,9 @@
-import { Button, Group } from "@mantine/core";
+import { Group } from "@mantine/core";
 import Converter from "../components/Converter";
 
 export default function IndexPage() {
   return (
-    <Group mt={50} position="center">
+    <Group position="center">
       <Converter />
     </Group>
   );
