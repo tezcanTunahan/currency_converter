@@ -1,3 +1,10 @@
+.converter-container {
+  height: 80vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .converter {
   display: flex;
   align-items: flex-end;
@@ -6,5 +13,13 @@
   span {
     font-size: x-large;
     font-weight: 700;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .converter {
+    flex-direction: column;
+    align-items: center;
+    gap: 0rem;
   }
 }
