@@ -6,7 +6,6 @@ async function getData(amount: number, currency: string, convertTo: string) {
   const res = await fetch(
     `https://api.exchangerate.host/convert?from=${currency}&to=${convertTo}&amount=${amount}}`
   );
-
   if (!res.ok) {
     throw new Error("Something went wrong");
   }
@@ -65,54 +64,46 @@ export default function Converter() {
     { value: "krw", label: "🇰🇷 KRW" },
   ];
 
-  const select = (
-    <NativeSelect
-      data={data}
-      onChange={(e) => {
-        setCurrency(e.currentTarget.value);
-      }}
-      styles={{
-        input: {
-          width: rem(110),
-        },
-      }}
-      value={currency}
-    />
-  );
-
   return (
     <div className="converter-container">
       <div className="converter">
-        <Button
-          onClick={() => {
-            let temp = currency;
-            setCurrency(convertTo);
-            setConvertTo(temp);
-          }}
-        >
-          switch
-        </Button>
         <TextInput
           onChange={(e) => {
             setAmount(Number(e.currentTarget.value));
           }}
           type="number"
           placeholder="Enter amount"
-          label="Convert amount"
-          rightSection={select}
-          rightSectionWidth={92}
+          label="amount"
+          style={{ width: "100%" }}
         />
 
-        <span>to</span>
+        <NativeSelect
+          data={data}
+          onChange={(e) => {
+            setCurrency(e.currentTarget.value);
+          }}
+          value={currency}
+          style={{ width: "100%" }}
+        />
 
+        <Button
+          onClick={() => {
+            let temp = currency;
+            setCurrency(convertTo);
+            setConvertTo(temp);
+          }}
+          style={{ width: "100%" }}
+        >
+          &#8645;
+        </Button>
         <NativeSelect
           data={data}
           onChange={(e) => {
             setConvertTo(e.currentTarget.value);
           }}
           value={convertTo}
+          style={{ width: "100%" }}
         />
-        <span>=</span>
         <span>{result ? result : 0}</span>
       </div>
     </div>
